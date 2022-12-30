@@ -1,0 +1,3 @@
+#ifndef CONCURRENT_QUEUE_H
+#define CONCURRENT_QUEUE_H
+#endif 
