@@ -30,8 +30,7 @@ set (EXAMPLE_SRCS
 #	${PROJECT_SOURCE_DIR}/unit-tests/test_reactor.cpp
 # )
 
-# Adding reactor library
-add_library(active_object 
+add_library(active_object STATIC 
 	${SRCS})
 
 target_compile_options(active_object PRIVATE  ${GCC_COMPILE_FLAGS})
@@ -42,7 +41,7 @@ target_include_directories(server PRIVATE ${PROJECT_SOURCE_DIR}/src)
 
 target_compile_options(server PRIVATE ${GCC_COMPILE_FLAGS})
 
-target_link_options(server PRIVATE active_object)
+target_link_libraries(server PRIVATE active_object)
 
 add_executable(client example/client.cpp)
 
@@ -50,7 +49,7 @@ target_include_directories(client PRIVATE ${PROJECT_SOURCE_DIR}/src)
 
 target_compile_options(client PRIVATE ${GCC_COMPILE_FLAGS})
 
-target_link_options(client PRIVATE active_object)
+target_link_libraries(client PRIVATE active_object)
 
 add_custom_target(
 	clang-tidy-check clang-tidy -extra-arg=-Wno-unknown-warning-option -p build/compile_commands.json -header-filter=.* ${SRCS} ${EXAMPLE_SRCS} ${TEST_SRCS}
