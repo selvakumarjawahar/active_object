@@ -17,24 +17,31 @@ struct CommandInterface {
     virtual ~CommandInterface() = default;
 };
 
-class GetRecommendations : public CommandInterface {
+class RecommendationCmd : public CommandInterface {
 public:
+    explicit RecommendationCmd(std::string inp) :
+        input(std::move(inp)){}
     std::future<Result> GetFuture() override;
     void Execute() override;
 
 private:
     // Some other methods and data to help generate the results.
     std::promise<Result> async_result;
+    std::string input;
 };
 
-class GetPredictions : public CommandInterface {
+class PredictionCmd : public CommandInterface {
 public:
+    explicit PredictionCmd(std::string inp):
+        input(std::move(inp))
+    {}
     std::future<Result> GetFuture() override;
     void Execute() override;
 
 private:
     // Some other methods and data to help generate the results.
     std::promise<Result> async_result;
+    std::string input;
 };
 }
 
