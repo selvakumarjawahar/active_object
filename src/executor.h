@@ -4,12 +4,18 @@
 #include "concurrent_queue.h"
 #include <atomic>
 #include <chrono>
+#include <functional>
+#include <memory>
 #include <optional>
 #include <thread>
 #include <type_traits>
 
 namespace active_object
 {
+
+template<typename T> struct is_smart_ptr : std::false_type {};
+template<typename T> struct is_smart_ptr<std::shared_ptr<T>> : std::true_type{};
+template<typename T> struct is_smart_ptr<std::unique_ptr<T>> : std::true_type{};
 
 template<typename T>
 class Executor
@@ -23,21 +29,21 @@ class Executor
         {
             while(keep_running)
             {
-                std::optional<T> command = queue_ref.dequeue();
-                if (!command)
+                std::optional<T> cmd_opt = queue_ref.dequeue();
+                if (!cmd_opt.has_value())
                 {
                     using namespace std::chrono_literals;
                     std::this_thread::sleep_for(5ms);
                     continue;
                 }
-                auto value = command.value();
-                if (std::is_pointer_v<decltype(value)>)
+                auto cmd = std::move(cmd_opt.value());
+                if constexpr (std::is_pointer<T>::value  || is_smart_ptr<T>::value)
                 {
-                    value->Execute();
+                    cmd->Execute();
                 }
                 else
                 {
-                    value.Execute();
+                    cmd.Execute();
                 }
             }
         }

@@ -2,12 +2,12 @@
 #include <future>
 
 namespace active_object {
-std::future<Result> GetRecommendations::GetFuture()
+std::future<Result> RecommendationCmd::GetFuture()
 {
     return async_result.get_future();
 }
 
-void GetRecommendations::Execute()
+void RecommendationCmd::Execute()
 {
     Result result;
     // Do whatever needed to get the results.
@@ -17,12 +17,12 @@ void GetRecommendations::Execute()
     async_result.set_value(result);
 }
 
-std::future<Result> GetPredictions::GetFuture()
+std::future<Result> PredictionCmd::GetFuture()
 {
     return async_result.get_future();
 }
 
-void GetPredictions::Execute()
+void PredictionCmd::Execute()
 {
     Result result;
     // Do whatever needed to get the results.

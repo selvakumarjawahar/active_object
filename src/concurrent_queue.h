@@ -12,7 +12,7 @@ public:
     void enqueue(T data) noexcept
     {
         std::lock_guard<std::mutex> guard(mtx);
-        queue.push(data);
+        queue.push(std::move(data));
     }
     std::optional<T> dequeue() noexcept
     {
@@ -20,7 +20,7 @@ public:
         if (queue.empty()) {
             return std::nullopt;
         }
-        auto data = queue.front;
+        auto data = std::move(queue.front());
         queue.pop();
         return data;
     }

@@ -15,14 +15,11 @@ set (SRCS
 	${PROJECT_SOURCE_DIR}/src/command.h
 	${PROJECT_SOURCE_DIR}/src/command.cpp
 	${PROJECT_SOURCE_DIR}/src/executor.h
-	${PROJECT_SOURCE_DIR}/src/executor.cpp
 	${PROJECT_SOURCE_DIR}/src/future_object.h
-	${PROJECT_SOURCE_DIR}/src/future_object.cpp
 	${PROJECT_SOURCE_DIR}/src/interface_proxy.h
 	${PROJECT_SOURCE_DIR}/src/interface_proxy.cpp)
 
 set (EXAMPLE_SRCS
-	${PROJECT_SOURCE_DIR}/example/server.cpp
 	${PROJECT_SOURCE_DIR}/example/client.cpp)
 
 # set (TEST_SRCS
@@ -35,13 +32,8 @@ add_library(active_object STATIC
 
 target_compile_options(active_object PRIVATE  ${GCC_COMPILE_FLAGS})
 
-add_executable(server example/server.cpp)
-
-target_include_directories(server PRIVATE ${PROJECT_SOURCE_DIR}/src)
-
-target_compile_options(server PRIVATE ${GCC_COMPILE_FLAGS})
-
-target_link_libraries(server PRIVATE active_object)
+target_link_libraries(active_object
+	PRIVATE pthread)
 
 add_executable(client example/client.cpp)
 

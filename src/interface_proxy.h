@@ -3,6 +3,7 @@
 
 #include "command.h"
 #include "concurrent_queue.h"
+#include "executor.h"
 
 #include <atomic>
 #include <future>
@@ -15,6 +16,7 @@ namespace active_object
 {
     using CommandQ = ConcurrentQueue<std::unique_ptr<CommandInterface>>;
     using AsyncResult = std::future<Result>;
+    using CommandExecutor = Executor<std::unique_ptr<CommandInterface>>;
 
     class Proxy
     {
@@ -27,7 +29,8 @@ namespace active_object
         private:
             CommandQ cmd_q;
             std::atomic<bool> running;
-            std::thread cmd_executor;
+            CommandExecutor executor;
+            std::thread executor_task;
 
     };
 
