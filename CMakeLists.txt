@@ -15,17 +15,11 @@ set (SRCS
 	${PROJECT_SOURCE_DIR}/src/command.h
 	${PROJECT_SOURCE_DIR}/src/command.cpp
 	${PROJECT_SOURCE_DIR}/src/executor.h
-	${PROJECT_SOURCE_DIR}/src/future_object.h
 	${PROJECT_SOURCE_DIR}/src/interface_proxy.h
 	${PROJECT_SOURCE_DIR}/src/interface_proxy.cpp)
 
 set (EXAMPLE_SRCS
 	${PROJECT_SOURCE_DIR}/example/client.cpp)
-
-# set (TEST_SRCS
-#	${PROJECT_SOURCE_DIR}/unit-tests/test_main.cpp
-#	${PROJECT_SOURCE_DIR}/unit-tests/test_reactor.cpp
-# )
 
 add_library(active_object STATIC 
 	${SRCS})
@@ -52,14 +46,3 @@ add_custom_target(
 		COMMAND clang-format -style=WebKit -i ${SRCS} ${EXAMPLE_SRCS} ${TEST_SRCS}
 		DEPENDS ${SRCS} ${EXAMPLE_SRCS} ${TEST_SRCS}
 )
-
-# add_subdirectory(tests)
-
-# enable_testing()
-
-# add_test(
-# NAME unit_test_reactor
-# COMMAND ${CMAKE_COMMAND} -E env ASAN_OPTIONS=check_initialization_order=true:strict_init_order=true 
-# $<TARGET_FILE:test_reactor>) 
-
-

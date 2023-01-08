@@ -6,6 +6,11 @@
 #include <queue>
 
 namespace active_object {
+/*!
+ * @brief this is a thread safe Queue which is used to hold the Commands.We are using coarse grained
+ * locking to keep the example simple. If better performance is needed one can implement a thread safe
+ * Queue with more fine grained locking or use a thirdparty implementation of a Concurrent Queue
+ */
 template <typename T>
 class ConcurrentQueue {
 public:
