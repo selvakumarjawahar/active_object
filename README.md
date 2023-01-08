@@ -1,7 +1,7 @@
 # active_object
 
 This repository has the example code for implementing the Active Object architecture design pattern. This example is a companion code for my cppindia talk on the Active objects.
-The slides used in the cppindia talk are here <slide url>
+The slides used in the cppindia talk is part of the repository
 
 This example needs C++17 compliant compiler to build. There are no other external dependencies for building this example. If you want to run clangformat and clang-tidy, you will need to
 install clangformat and clang tidy. 
